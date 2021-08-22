@@ -25,7 +25,7 @@ export default function IndexPages():JSX.Element {
         return url2.join("/")
     }
     return (
-        <div className="mx-auto max-w-screen-md grid gap-2">
+        <main className="mx-auto max-w-screen-md grid gap-2">
             {listRepos.length === 0 ? "" : listRepos.map((repo, index) => {return(    
                 <Directory 
                 key={index}
@@ -33,6 +33,6 @@ export default function IndexPages():JSX.Element {
                 url={"https://api.github.com/repos/" + parseURL(repo) }
                 type="repository" />
             )})}
-        </div>
+        </main>
     )
 }
