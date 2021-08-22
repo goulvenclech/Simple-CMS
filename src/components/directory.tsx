@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import config from "../../simple-config.json"
 /**
  * 
@@ -51,6 +52,9 @@ export default function Directory(props:Props):JSX.Element {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
             </svg>}
             <p className="text-lg">{props.title}/</p>
+            <svg xmlns="http://www.w3.org/2000/svg" className={isOpen?"h-6 w-6 ml-auto  rotate-90" : "h-6 w-6 ml-auto"} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
             </button>
             <div
             style={{ maxHeight: `${Height}` }}
@@ -60,10 +64,35 @@ export default function Directory(props:Props):JSX.Element {
                     return <Directory key={dir.sha} title={dir.name} url={dir.url} type="directory" />
                 })}
                 {childs.files.map(file => {
+                    /**
+                     * Create a new component for that
+                     */
                     return (
-                        <p key={file.sha} className="pl-6 text-lg bg-gray-700 border-gray-600 border-b w-full py-2 px-4 ">
-                        {file.name}
-                        </p>
+                        <article key={file.sha} className="pl-6 text-lg bg-gray-700 border-gray-600 border-b
+                        w-full py-2 px-4">
+                        {file.name.slice(-3) === ".md" ? 
+                            <div className="flex gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <p>{file.name}</p>
+                                <Link to={"/edit-"+file.name.slice(0, -3)} className="ml-auto">
+                                    <button className="text-xs bg-gray-600 rounded-md px-2">
+                                        Editer 
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        </svg>
+                                    </button>
+                                </Link>
+                            </div>
+                        :   <div className="flex gap-2 opacity-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                                <p>{file.name}</p>
+                            </div>
+                        }
+                        </article>
                     )
                 })}
             </div>
