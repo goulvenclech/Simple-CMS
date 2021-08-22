@@ -12,6 +12,8 @@ Simple CMS est basé sur [React](https://reactjs.org/), [React Router](https://r
 
 3 - Ouvrez le dossier, puis installez les dépendances avec `yarn install`
 
-3 - Lancez le live serveur de ViteJS avec `yarn dev`
+4 - Ouvrez le fichier `simple-config.json` et remplissez les informations demandées.
 
-4 - Pour obtenir une version production avec `yarn build`
+5 - Lancez le live serveur de ViteJS avec `yarn dev`
+
+6 - Pour obtenir une version production avec `yarn build`

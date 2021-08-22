@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import secretKey from "../../../secret-key.json"
+import config from "../../../simple-config.json"
 /**
  * 
  */
@@ -8,7 +8,7 @@ export default function Hero():JSX.Element {
     useEffect(() => {
         (async () => {
             try {
-              const response = await fetch("https://api.github.com/users/" + secretKey.id, {method: "get", headers: {Authorization: secretKey.token}})
+              const response = await fetch("https://api.github.com/users/" + config.githubID, {method: "get", headers: {"Authorization": "token " + config.githubToken}})
               if (response.ok) {
                 const data = await response.json()
                 setUserName(data.name)

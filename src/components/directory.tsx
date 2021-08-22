@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import secretKey from "../../secret-key.json"
+import config from "../../simple-config.json"
 /**
  * 
  */
@@ -22,7 +22,7 @@ export default function Directory(props:Props):JSX.Element {
     useEffect(() => {
         (async () => {
             try {
-              const response = await fetch(props.url, {method: "get", headers: {Authorization: secretKey.token}})
+              const response = await fetch(props.url, {method: "get", headers: {"Authorization": "token " + config.githubToken}})
               if (response.ok) {
                 const data:Array<Child> = await response.json()
                 setChilds({
@@ -40,26 +40,26 @@ export default function Directory(props:Props):JSX.Element {
 
     return(
         <div className="font-mono">
-        <button className=" bg-gray-600 border-gray-500 border-b w-full py-2 px-4 " 
-          onClick={toggleAccordion}>
-          <p className="text-lg text-left">{props.title}/</p>
-        </button>
-        <div
-          style={{ maxHeight: `${Height}` }}
-          className="ml-4 overflow-hidden duration-300"
-        >
-            {childs.subDirectories.map(dir => {
-                return <Directory key={dir.sha} title={dir.name} url={dir.url} type="directory" />
-            })}
-            {childs.files.map(file => {
-                return (
-                    <p key={file.sha} className="pl-6 text-lg bg-gray-700 border-gray-600 border-b w-full py-2 px-4 ">
-                    {file.name}
-                    </p>
-                )
-            })}
+            <button className=" bg-gray-600 border-gray-500 border-b w-full py-2 px-4 " 
+            onClick={toggleAccordion}>
+            <p className="text-lg text-left">{props.title}/</p>
+            </button>
+            <div
+            style={{ maxHeight: `${Height}` }}
+            className="ml-4 overflow-hidden"
+            >
+                {childs.subDirectories.map(dir => {
+                    return <Directory key={dir.sha} title={dir.name} url={dir.url} type="directory" />
+                })}
+                {childs.files.map(file => {
+                    return (
+                        <p key={file.sha} className="pl-6 text-lg bg-gray-700 border-gray-600 border-b w-full py-2 px-4 ">
+                        {file.name}
+                        </p>
+                    )
+                })}
+            </div>
         </div>
-      </div>
     )
 }
 /**
