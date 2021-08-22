@@ -39,22 +39,22 @@ export default function Directory(props:Props):JSX.Element {
     }, [])
 
     return(
-        <div className="my-4 rounded-xl bg-gray-200 border-gray-400 border-2 m-4">
-        <button className=" bg-gray-400 w-full rounded-lg py-2 px-4 " 
+        <div className="font-mono">
+        <button className=" bg-gray-600 border-gray-500 border-b w-full py-2 px-4 " 
           onClick={toggleAccordion}>
           <p className="text-lg text-left">{props.title}/</p>
         </button>
         <div
           style={{ maxHeight: `${Height}` }}
-          className="overflow-hidden duration-300"
+          className="ml-4 overflow-hidden duration-300"
         >
             {childs.subDirectories.map(dir => {
                 return <Directory key={dir.sha} title={dir.name} url={dir.url} type="directory" />
             })}
             {childs.files.map(file => {
                 return (
-                    <p key={file.sha} className="pl-6 text-lg">
-                    - {file.name}
+                    <p key={file.sha} className="pl-6 text-lg bg-gray-700 border-gray-600 border-b w-full py-2 px-4 ">
+                    {file.name}
                     </p>
                 )
             })}
