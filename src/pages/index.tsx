@@ -18,13 +18,19 @@ export default function IndexPages():JSX.Element {
             }
         })()
     }, [])
+    function parseURL(url:string):string {
+        let url2 = url.split("/")
+        // can't make a pipeline because splice() didn't return the result array
+        url2.splice(2, 0, "contents")
+        return url2.join("/")
+    }
     return (
         <div className="mx-auto max-w-screen-md grid gap-2">
             {listRepos.length === 0 ? "" : listRepos.map((repo, index) => {return(    
                 <Directory 
                 key={index}
                 title={repo}
-                url={"https://api.github.com/repos/"+ repo + "/contents/"}
+                url={"https://api.github.com/repos/" + parseURL(repo) }
                 type="repository" />
             )})}
         </div>
