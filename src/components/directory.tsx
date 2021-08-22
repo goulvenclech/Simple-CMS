@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import secretKey from "../../secret-key.json"
 /**
  * 
  */
@@ -21,14 +22,16 @@ export default function Directory(props:Props):JSX.Element {
     useEffect(() => {
         (async () => {
             try {
-              const response = await fetch(props.url)
+              const response = await fetch(props.url, {method: "get", headers: {Authorization: secretKey.token}})
               if (response.ok) {
                 const data:Array<Child> = await response.json()
-                const directs:Array<Child> = []
-                const contenu:Array<Child> = []
-                data.map(element => { element.type === "dir" ? directs.push(element) : contenu.push(element) })
-                setChilds({subDirectories: directs, files: contenu})
-              } 
+                setChilds({
+                    subDirectories: data.filter(element => element.type === "dir"), 
+                    files: data.filter(element => element.type === "file")
+                })
+              }else {
+                console.error(`Erreur ${response.status} : ${response.statusText}`)
+              }
             } catch (err) {
                 console.error(err)
             }
